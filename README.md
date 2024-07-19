@@ -24,6 +24,10 @@ Once we have the luminance and rgb values of each resolution square, we simplu l
 git clone https://github.com/PoloClebicar/CS50P_Final_Project.git
 ``` 
 
+```
+pip install -r requirements.txt
+``` 
+
 Move into the downloaded directory. 
 
 `python3 project.py -i ./path_to_img`
