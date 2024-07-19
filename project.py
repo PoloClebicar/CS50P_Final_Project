@@ -4,54 +4,67 @@ import cv2
 import math
 import sys
 
-
-"""
-
-Setting Up the Argparser to take all the necessacy and extra arguments.
-
-"""
-parser = argparse.ArgumentParser(
-                    prog='CS50 Final Project -  ASCII Renderer',
-                    description='This programs imports a img and convert that image to ASCII, and display it in the terminal.',
-                    epilog='Usage: project.py -i ./path_to_img')
-
-
-parser.add_argument("-r", "--resolution",   type=int,       default= 5,     help="int [1-15], Changes the resolution of the grid of ASCII, the smaller the value, the greater the amouunt of characters printed.(Default 7)")
-parser.add_argument("-o", "--outline",      type=int,       default= 0,     help="int [0-1], Toggle the Outline Effect ON and OFF(Default).")
-parser.add_argument("-a", "--ascii",        type=int,       default= 2,     help="int [1-3], Toggles between the 3 types of characters list - ASCII / Extended ASCII(Default) / UNICODE")
-parser.add_argument("-c", "--color",        type=int,       default=1,      help="int [0-1], Toggles from Black and White to Color Mode(Default)")
-parser.add_argument("-x", "--xHeight", type=int, default=600, help="int, The maximum height of the output ASCII img")
-parser.add_argument("-y", "--yWidth", type=int, default=600, help="int, The maximum width of the output ASCII img")
-parser.add_argument("-i", "--image",        required=True,  help="Required path to img.")
-args = parser.parse_args()
-
-#Managind output resolution
-if(0< args.xHeight < 2000): max_height = args.xHeight
-else:sys.exit("ASCII Imgae resolution Out of Bounds")
-if(0< args.yWidth < 2000): max_width = args.yWidth
-else:sys.exit("ASCII Imgae resolution Out of Bounds")
-
-#Managing Resolution
-if (1 <= args.resolution <= 10): resolution = args.resolution
-else: sys.exit("Resolution Out of Bounds")
-
-#Managing Outline
-if (0 <= args.outline <= 1): outline = args.outline
-else: sys.exit("Outline Argument Out of Bounds")
-
-#Managing ASCII
-if (1 <= args.ascii <= 3): ascii_table = args.ascii
-else: sys.exit("ASCII Argument Out of Bounds")
-
-#Managing Color
-if (0 <= args.color <= 1): color = args.color
-else: sys.exit("Color Argument Out of Bounds")
-
-
+#Ended up needing to place this vatiable here for testing purpose. Not sure how to simulate tests when using argparse. Need to check it later
+max_height = 600
+max_width = 600
+resolution = 5
+outline = 0
+ascii_table = 2
+color = 1
 
 def main():
+    global max_height
+    global max_width 
+    global resolution 
+    global outline 
+    global ascii_table 
+    global color 
+
+    """
+
+    Setting Up the Argparser to take all the necessacy and extra arguments.
+
+    """
+    parser = argparse.ArgumentParser(
+                        prog='CS50 Final Project -  ASCII Renderer',
+                        description='This programs imports a img, converts that image to ASCII, and displays it on the terminal.',
+                        epilog='Usage: project.py -i ./path_to_img')
+
+
+    parser.add_argument("-r", "--resolution",   type=int,       default= 5,     help="int [1-10], Changes the resolution of the grid of ASCII, the smaller the value, the greater the amouunt of characters printed.(Default 7)")
+    parser.add_argument("-o", "--outline",      type=int,       default= 0,     help="int [0-1], Toggle the Outline Effect ON and OFF(Default).")
+    parser.add_argument("-a", "--ascii",        type=int,       default= 2,     help="int [1-3], Toggles between the 3 types of characters list - ASCII / Extended ASCII(Default) / UNICODE")
+    parser.add_argument("-c", "--color",        type=int,       default=1,      help="int [0-1], Toggles from Black and White to Color Mode(Default)")
+    parser.add_argument("-x", "--xHeight", type=int, default=600, help="int [200 - 2000], The maximum height of the output ASCII img")
+    parser.add_argument("-y", "--yWidth", type=int, default=600, help="int[200 - 2000], The maximum width of the output ASCII img")
+    parser.add_argument("-i", "--image",        required=True,  help="Required path to img.")
+    args = parser.parse_args()
+
+    #Managind output resolution
+    if(200< args.xHeight < 2000): max_height = args.xHeight
+    else:sys.exit("ASCII Imgae resolution Out of Bounds")
+    if(200< args.yWidth < 2000): max_width = args.yWidth
+    else:sys.exit("ASCII Imgae resolution Out of Bounds")
+
+    #Managing Resolution
+    if (1 <= args.resolution <= 10): resolution = args.resolution
+    else: sys.exit("Resolution Out of Bounds")
+
+    #Managing Outline
+    if (0 <= args.outline <= 1): outline = args.outline
+    else: sys.exit("Outline Argument Out of Bounds")
+
+    #Managing ASCII
+    if (1 <= args.ascii <= 3): ascii_table = args.ascii
+    else: sys.exit("ASCII Argument Out of Bounds")
+
+    #Managing Color
+    if (0 <= args.color <= 1): color = args.color
+    else: sys.exit("Color Argument Out of Bounds")
+
     #Getting User image size
     img_file = cv2.imread(args.image)
+    #assert img_file != None, sys.exit("Image Not Found")
     
     #cv2.imshow("Test", img)
     #cv2.waitKey(0)
@@ -70,7 +83,6 @@ def main():
     # Steps needed to edge detect later
     img_gray = cv2.cvtColor(img_file, cv2.COLOR_BGR2GRAY)
     img_blur = cv2.GaussianBlur(img_gray, (3,3), 0) 
-    sobelxy = cv2.Sobel(src=img_blur, ddepth=cv2.CV_64F, dx=1, dy=1, ksize=5) 
     #This is the important one that we will use to detect outlines
     edges = cv2.Canny(image=img_blur, threshold1=60, threshold2=150) 
 
