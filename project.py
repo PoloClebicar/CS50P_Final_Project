@@ -41,9 +41,9 @@ def main():
     args = parser.parse_args()
 
     #Managind output resolution
-    if(200< args.xHeight < 2000): max_height = args.xHeight
+    if(200 <= args.xHeight <= 2000): max_height = args.xHeight
     else:sys.exit("ASCII Imgae resolution Out of Bounds")
-    if(200< args.yWidth < 2000): max_width = args.yWidth
+    if(200 <= args.yWidth <= 2000): max_width = args.yWidth
     else:sys.exit("ASCII Imgae resolution Out of Bounds")
 
     #Managing Resolution
