@@ -15,7 +15,7 @@ def test_loop_sizes():
    assert project.get_loop_sizes(200, 2000) == (40, 400)
 
 def test_get_lists():
-    img = cv2.imread("01.png")
+    img = cv2.imread("./Test_files/01.png")
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     img_blur = cv2.GaussianBlur(img_gray, (3,3), 0) 
     edges = cv2.Canny(image=img_blur, threshold1=60, threshold2=150) 

@@ -1,6 +1,6 @@
 
 # ASCII Renderer
-## Video Demo: __TO DO___
+## Video Demo: [Presentation Video](https://youtu.be/ZcBVRP5fXD0)
 ### Description: 
 A program that converts images to ASCII Art and displays them in terminal in color.
 
